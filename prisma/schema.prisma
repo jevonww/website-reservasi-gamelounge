@@ -1,0 +1,215 @@
+// LEVELUP — Prisma schema
+// Prisma ORM 7 · PostgreSQL (Prisma Postgres in production)
+// The connection string lives in prisma.config.ts (env("DATABASE_URL")).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+enum SetupStatus {
+  AVAILABLE
+  MAINTENANCE
+  INACTIVE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  VERIFIED
+  REJECTED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  QRIS
+  CASH
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  username     String?  @unique
+  passwordHash String
+  role         Role     @default(CUSTOMER)
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookings        Booking[]
+  reviews         Review[]
+  auditLogs       AuditLog[] @relation("ActorAuditLogs")
+  verifiedPayments Payment[] @relation("VerifiedPayments")
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+model Setup {
+  id         String      @id @default(cuid())
+  name       String
+  slug       String      @unique
+  description String
+  category   String
+  specs      Json
+  facilities String[]    @default([])
+  imageUrl   String
+  gallery    String[]    @default([])
+  hourlyRate Int
+  status     SetupStatus @default(AVAILABLE)
+  featured   Boolean     @default(false)
+  sortOrder  Int         @default(0)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  bookings Booking[]
+  reviews  Review[]
+
+  @@index([category, status])
+  @@index([status, featured])
+}
+
+/// Uploaded setup media. Stored in Postgres so uploads survive redeploys on
+/// hosts with an ephemeral filesystem (Vercel, containers).
+model SetupImage {
+  id        String   @id @default(cuid())
+  mimeType  String
+  size      Int
+  data      Bytes
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Booking {
+  id             String        @id @default(cuid())
+  code           String        @unique
+  userId         String
+  setupId        String
+  startAt        DateTime      @db.Timestamptz(3)
+  endAt          DateTime      @db.Timestamptz(3)
+  durationMinutes Int
+  hourlyRate     Int
+  totalPrice     Int
+  status         BookingStatus @default(PENDING)
+  paymentExpiresAt DateTime?   @db.Timestamptz(3)
+  notes          String?
+  cancelledAt    DateTime?     @db.Timestamptz(3)
+  checkedInAt    DateTime?     @db.Timestamptz(3)
+  startedAt      DateTime?     @db.Timestamptz(3)
+  completedAt    DateTime?     @db.Timestamptz(3)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  setup   Setup    @relation(fields: [setupId], references: [id], onDelete: Restrict)
+  payment Payment?
+  review  Review?
+  auditLogs AuditLog[]
+
+  @@index([userId, createdAt])
+  @@index([setupId, startAt, endAt])
+  @@index([status, paymentExpiresAt])
+  @@index([startAt])
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  bookingId      String        @unique
+  amount         Int
+  method         PaymentMethod @default(BANK_TRANSFER)
+  status         PaymentStatus @default(UNPAID)
+  transactionRef String?       @unique
+  paidAt         DateTime?     @db.Timestamptz(3)
+  verifiedById   String?
+  verifiedAt     DateTime?     @db.Timestamptz(3)
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  booking    Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  verifiedBy User?   @relation("VerifiedPayments", fields: [verifiedById], references: [id], onDelete: SetNull)
+
+  @@index([status])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  setupId   String
+  bookingId String   @unique
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  setup   Setup   @relation(fields: [setupId], references: [id], onDelete: Cascade)
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([setupId, rating])
+}
+
+model LoungeSettings {
+  id                       String   @id @default("default")
+  loungeName               String   @default("LEVELUP")
+  tagline                  String   @default("Premium Gaming Lounge")
+  timezone                 String   @default("Asia/Jakarta")
+  openTime                 String   @default("10:00")
+  closeTime                String   @default("22:00")
+  minDurationMinutes       Int      @default(60)
+  maxDurationMinutes       Int      @default(240)
+  slotIntervalMinutes      Int      @default(60)
+  paymentExpirationMinutes Int      @default(30)
+  cancellationHours        Int      @default(2)
+  address                  String   @default("Jl. Contoh No. 12, Jakarta Selatan")
+  phone                    String   @default("+62 812 0000 0000")
+  email                    String   @default("hello@levelup.id")
+  instagram                String   @default("@levelup.gaming")
+  mapsUrl                  String   @default("https://maps.google.com")
+  bankName                 String   @default("BCA")
+  bankAccountNumber        String   @default("1234567890")
+  bankAccountName          String   @default("PT LEVELUP GAMING")
+  cancellationPolicy       String   @default("Pembatalan gratis hingga 2 jam sebelum sesi dimulai.")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  actor   User?   @relation("ActorAuditLogs", fields: [actorId], references: [id], onDelete: SetNull)
+  booking Booking? @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  bookingId String?
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}

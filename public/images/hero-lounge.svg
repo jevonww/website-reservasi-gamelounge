@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">LEVELUP gaming lounge</title>
+  <desc id="desc">Cinematic dark gaming lounge with violet and cyan lighting.</desc>
+  <defs>
+    <radialGradient id="violetGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9B7BFF" stop-opacity="0.55"/>
+      <stop offset="70%" stop-color="#9B7BFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#9B7BFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyanGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5EE7FF" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#5EE7FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12101f"/>
+      <stop offset="55%" stop-color="#0b0a14"/>
+      <stop offset="100%" stop-color="#07070d"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#131120"/>
+      <stop offset="100%" stop-color="#07070c"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8f76ff"/>
+      <stop offset="45%" stop-color="#5f8bff"/>
+      <stop offset="100%" stop-color="#5ee7ff"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9B7BFF" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#9B7BFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="cyanBeam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5EE7FF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#5EE7FF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur40"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="blur18"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+    <linearGradient id="vignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05050a" stop-opacity="0.15"/>
+      <stop offset="70%" stop-color="#05050a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#05050a" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="glassPanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#08080f"/>
+  <rect width="1600" height="720" fill="url(#wall)"/>
+  <rect y="700" width="1600" height="300" fill="url(#floor)"/>
+
+  <!-- back wall slats -->
+  <g opacity="0.5">
+    <g fill="#1b1730">
+      <rect x="80" y="120" width="26" height="480" rx="4"/>
+      <rect x="126" y="120" width="26" height="480" rx="4"/>
+      <rect x="172" y="120" width="26" height="480" rx="4"/>
+      <rect x="218" y="120" width="26" height="480" rx="4"/>
+      <rect x="264" y="120" width="26" height="480" rx="4"/>
+      <rect x="1310" y="120" width="26" height="480" rx="4"/>
+      <rect x="1356" y="120" width="26" height="480" rx="4"/>
+      <rect x="1402" y="120" width="26" height="480" rx="4"/>
+      <rect x="1448" y="120" width="26" height="480" rx="4"/>
+      <rect x="1494" y="120" width="26" height="480" rx="4"/>
+    </g>
+  </g>
+
+  <!-- light beams -->
+  <path d="M380 0 L300 700 L520 700 Z" fill="url(#beam)"/>
+  <path d="M1180 0 L1060 700 L1300 700 Z" fill="url(#cyanBeam)"/>
+
+  <!-- ambient orbs -->
+  <circle cx="300" cy="260" r="300" fill="url(#violetGlow)" filter="url(#blur18)"/>
+  <circle cx="1260" cy="200" r="260" fill="url(#cyanGlow)" filter="url(#blur18)"/>
+
+  <!-- neon strip -->
+  <rect x="0" y="694" width="1600" height="3" fill="url(#screen)" opacity="0.6" filter="url(#blur6)"/>
+  <rect x="0" y="694" width="1600" height="1" fill="#c9bcff" opacity="0.5"/>
+
+  <!-- desk row -->
+  <g>
+    <!-- desk surface -->
+    <rect x="0" y="640" width="1600" height="26" fill="#171428"/>
+    <rect x="0" y="640" width="1600" height="2" fill="#3a3358" opacity="0.8"/>
+
+    <!-- left station -->
+    <g>
+      <rect x="110" y="450" width="250" height="150" rx="10" fill="#05050b" stroke="#2a2444" stroke-width="3"/>
+      <rect x="122" y="462" width="226" height="126" rx="6" fill="url(#screen)" opacity="0.85"/>
+      <rect x="122" y="462" width="226" height="126" rx="6" fill="#08080f" opacity="0.28"/>
+      <path d="M140 560 l60 -60 l40 34 l56 -48 l52 74 Z" fill="#0a0a16" opacity="0.55"/>
+      <circle cx="300" cy="492" r="12" fill="#5EE7FF" opacity="0.85"/>
+      <rect x="200" y="600" width="70" height="8" rx="4" fill="#252040"/>
+      <rect x="232" y="600" width="6" height="40" fill="#1b1830"/>
+      <rect x="170" y="612" width="130" height="6" rx="3" fill="#252040"/>
+      <rect x="150" y="618" width="170" height="12" rx="4" fill="#0e0d18"/>
+      <rect x="158" y="618" width="154" height="4" rx="2" fill="#9B7BFF" opacity="0.5"/>
+      <!-- tower -->
+      <rect x="400" y="500" width="70" height="140" rx="8" fill="#0a0913" stroke="#26213d" stroke-width="2"/>
+      <rect x="411" y="514" width="48" height="112" rx="4" fill="#0d0c18"/>
+      <circle cx="435" cy="556" r="11" fill="#9B7BFF" opacity="0.85"/>
+      <circle cx="435" cy="556" r="20" fill="#9B7BFF" opacity="0.3" filter="url(#blur6)"/>
+      <rect x="418" y="592" width="34" height="3" rx="1.5" fill="#5EE7FF" opacity="0.7"/>
+      <rect x="418" y="600" width="34" height="3" rx="1.5" fill="#9B7BFF" opacity="0.6"/>
+    </g>
+
+    <!-- center station -->
+    <g>
+      <rect x="620" y="400" width="340" height="200" rx="12" fill="#05050b" stroke="#332b54" stroke-width="3"/>
+      <rect x="634" y="414" width="312" height="172" rx="7" fill="url(#screen)" opacity="0.9"/>
+      <rect x="634" y="414" width="312" height="172" rx="7" fill="#08080f" opacity="0.22"/>
+      <path d="M660 560 l90 -100 l60 56 l70 -74 l66 118 Z" fill="#0a0a16" opacity="0.6"/>
+      <circle cx="900" cy="448" r="16" fill="#5EE7FF" opacity="0.9"/>
+      <circle cx="900" cy="448" r="30" fill="#5EE7FF" opacity="0.3" filter="url(#blur6)"/>
+      <rect x="740" y="600" width="100" height="10" rx="5" fill="#2b2450"/>
+      <rect x="784" y="600" width="8" height="40" fill="#1d1934"/>
+      <rect x="700" y="612" width="180" height="7" rx="3.5" fill="#2b2450"/>
+      <rect x="670" y="620" width="240" height="14" rx="5" fill="#0f0e19"/>
+      <rect x="680" y="620" width="220" height="4" rx="2" fill="#9B7BFF" opacity="0.65"/>
+      <ellipse cx="790" cy="676" rx="150" ry="14" fill="#9B7BFF" opacity="0.18" filter="url(#blur6)"/>
+    </g>
+
+    <!-- right console station -->
+    <g>
+      <rect x="1090" y="360" width="360" height="220" rx="14" fill="#06060d" stroke="#2a3a4a" stroke-width="3"/>
+      <rect x="1104" y="374" width="332" height="192" rx="8" fill="url(#screen)" opacity="0.6"/>
+      <rect x="1104" y="374" width="332" height="192" rx="8" fill="#08080f" opacity="0.4"/>
+      <path d="M1130 540 l100 -80 l70 44 l80 -66 l50 102 Z" fill="#0a0a16" opacity="0.6"/>
+      <rect x="1180" y="612" width="180" height="10" rx="5" fill="#2a2740"/>
+      <rect x="1265" y="612" width="8" height="38" fill="#1c1a30"/>
+      <rect x="1160" y="624" width="220" height="12" rx="4" fill="#0e0d18"/>
+      <ellipse cx="1270" cy="678" rx="150" ry="13" fill="#5EE7FF" opacity="0.16" filter="url(#blur6)"/>
+    </g>
+  </g>
+
+  <!-- hanging lamps -->
+  <g opacity="0.85">
+    <rect x="560" y="0" width="2" height="150" fill="#2b2640"/>
+    <ellipse cx="561" cy="154" rx="38" ry="12" fill="#191528" stroke="#3b3360" stroke-width="2"/>
+    <ellipse cx="561" cy="168" rx="26" ry="30" fill="#9B7BFF" opacity="0.25" filter="url(#blur18)"/>
+    <rect x="1040" y="0" width="2" height="120" fill="#2b2640"/>
+    <ellipse cx="1041" cy="124" rx="34" ry="10" fill="#191528" stroke="#3b3360" stroke-width="2"/>
+    <ellipse cx="1041" cy="138" rx="24" ry="28" fill="#5EE7FF" opacity="0.2" filter="url(#blur18)"/>
+  </g>
+
+  <!-- foreground glass table + reflections -->
+  <g opacity="0.6">
+    <ellipse cx="800" cy="900" rx="420" ry="46" fill="#9B7BFF" opacity="0.08" filter="url(#blur18)"/>
+    <ellipse cx="800" cy="920" rx="620" ry="52" fill="#5EE7FF" opacity="0.05" filter="url(#blur18)"/>
+    <rect x="480" y="780" width="640" height="140" rx="20" fill="url(#glassPanel)" stroke="#ffffff" stroke-opacity="0.08"/>
+  </g>
+
+  <rect width="1600" height="1000" fill="url(#vignette)"/>
+</svg>
